@@ -1,41 +1,56 @@
-import java.util.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int color[] = new int[2], cp[][];
-    public static void main(String args[]) throws IOException{
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        cp = new int[n][n];
-        StringTokenizer st;
-        for(int i=0; i<n; i++) {
-            st = new StringTokenizer(br.readLine());
-            for(int j=0; j<n; j++)
-                cp[i][j] = Integer.parseInt(st.nextToken());
-        }
-        cut(0, 0, n);
-        for(int i=0; i<2; i++)
-            System.out.println(color[i]);
-    }
-    static void cut(int row, int col, int size){
-        if(size == 1)
-            color[cp[row][col]]++;
-        else {
-            if(isEqual(row, col, size))
-                color[cp[row][col]]++;
-            else {
-                int dSize = size/2;
-                for(int i=row; i<row+size; i+=dSize)
-                    for(int j=col; j<col+size; j+=dSize)
-                        cut(i, j, dSize);
-            }
-        }
-    }
-    static boolean isEqual(int row, int col, int size) {
-        for(int i=row; i<row+size; i++)
-            for(int j=col; j<col+size; j++)
-                if(cp[row][col] != cp[i][j])
-                    return false;
-        return true;
-    }
+	
+	static int white = 0;
+	static int blue = 0;
+	static int[][] paper;
+	
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int N = Integer.parseInt(br.readLine());
+		paper = new int[N][N];
+		StringTokenizer st;
+		for(int i = 0; i < N; i++) {
+			st = new StringTokenizer(br.readLine());
+			for(int j = 0; j < N; j++) {
+				paper[i][j] = Integer.parseInt(st.nextToken());
+			}
+		}
+		divied(0, 0, N);
+		System.out.println(white);
+		System.out.println(blue);
+	}
+	
+	public static void divied(int x, int y, int n) {
+		boolean flag = true;
+		// 색종이 통일 되어 있는지 탐색
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
+				// 다른 색 하나 있을 경우
+				if(paper[x][y] != paper[x + i][y + j]) {
+					flag = false;
+					break;
+				}
+				if(!flag) break;
+			}
+		}
+		// 탐색한 영역이 한가지 색으로 통일된 경우
+		if (flag) {
+			if(paper[x][y] == 0) {
+				white++;
+			}else {
+				blue++;
+			}
+		}else {
+			divied(x, y, n / 2);
+			divied(x + n / 2, y, n / 2);
+			divied(x, y + n / 2, n / 2);
+			divied(x + n / 2, y + n / 2, n / 2);
+		}
+	}
+	
 }
