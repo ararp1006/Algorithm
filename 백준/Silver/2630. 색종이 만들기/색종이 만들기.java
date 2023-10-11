@@ -46,10 +46,10 @@ public class Main {
 				blue++;
 			}
 		}else {
-			divied(x, y, n / 2);
-			divied(x + n / 2, y, n / 2);
-			divied(x, y + n / 2, n / 2);
-			divied(x + n / 2, y + n / 2, n / 2);
+			divied(x, y, n / 2); //1
+			divied(x + n / 2, y, n / 2); //2
+			divied(x, y + n / 2, n / 2); //3
+			divied(x + n / 2, y + n / 2, n / 2); //4
 		}
 	}
 	
