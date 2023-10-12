@@ -16,8 +16,9 @@ class Main {
         char maxChar = '?';
         for(int i = 0; i < str.length(); i++){
             int idx = str.charAt(i) - 'A';
-            if(maxValue < ++count[idx]){
-               
+            ++count[idx];
+                
+            if(maxValue < count[idx]){
                 maxValue = count[idx];
                 maxChar = str.charAt(i);
             }
