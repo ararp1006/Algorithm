@@ -1,17 +1,18 @@
 class Solution {
-  public int[] solution(String s) {
-        int[] answer = new int[s.length()];
-        
-        for(int i=0;i<s.length();i++){
-            if(i !=0){
-                int idx = s.substring(0,i).lastIndexOf(s.charAt(i));
-                if(idx != -1) answer[i] = i-idx;
-                    
-                else answer[i] = idx;
+  public int[] solution(String str) {
+          int[] result = new int[str.length()];
+
+        for(int i=0;i<str.length();i++){
+
+            String subStr = str.substring(0,i);
+            
+            if(subStr.indexOf(str.charAt(i))==-1) {
+                result[i] = -1;
+            }else {
+                result[i] = i-subStr.lastIndexOf(str.charAt(i));
             }
-            else answer[i] = -1;
         }
-        
-        return answer;
+        return result;
     }
+        
 }
