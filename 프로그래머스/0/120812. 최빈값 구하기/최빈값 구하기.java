@@ -1,19 +1,22 @@
-import java.util.Arrays;
+import java.util.*;
 
-public class Solution {
+
+class Solution {
     public int solution(int[] array) {
-        int[] counts = new int[1001]; 
-        for (int num : array) {
-            counts[num]++;
+        int maxCount = 0;
+        int answer = 0;
+        Map<Integer, Integer> map = new HashMap<>();
+        for(int number : array){
+            int count = map.getOrDefault(number, 0) + 1;
+            if(count > maxCount){
+                maxCount = count;
+                answer = number;
+            }
+            else  if(count == maxCount){
+                answer = -1;
+            }
+            map.put(number, count);
         }
-        
-        int maxCount = Arrays.stream(counts).max().getAsInt();
-        if (Arrays.stream(counts).filter(count -> count == maxCount).count() > 1) {
-            return -1;
-        }
-        
-        return Arrays.stream(counts).boxed()
-                .collect(java.util.stream.Collectors.toList())
-                .indexOf(maxCount);
+        return answer;
     }
 }
